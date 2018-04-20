@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block content %}
+{% if user.is_authenticated %}
+<img height="45px" width="45px" src="{{ user.avatar }}" /> <p>Howdy there, {{ user.name }}!</p>
+{% endif %}
+<h1>Find recommendations! Enter a song:</h1>
+<h2>Because Spotify is difficult and obnoxious, you'll need to get an access token before you can search.</h2>
+<a href="https://beta.developer.spotify.com/console/get-search-item/">Go to this url and click "Get Token" to get one.</a>
+<form action="" method="POST">
+	{{ form.hidden_tag() }}
+	{{ form.title.label }} {{ form.title() }}<br>
+	{{ form.artist.label }} {{ form.artist() }}<br>
+	{{ form.genre.label }} {{ form.genre() }}<br>
+	{{ form.token.label }} {{ form.token() }}<br>
+	{{ form.submit() }}<br>
+</form>
+<div>
+    {% for message in get_flashed_messages() %}
+        {{ message }}
+    {% endfor %}
+</div>
+{% endblock %}
+
+

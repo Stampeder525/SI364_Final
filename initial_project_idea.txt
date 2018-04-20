@@ -1,0 +1,1 @@
+This app allows users to register and sign in, and submit a song that will return a list of results of recommendations for similar songs, both by genre and artist. The app will make use of the spotify api. Users may look at details for an individual song and see a list of all of their recommendations, however they cannot see other users' recommendations.

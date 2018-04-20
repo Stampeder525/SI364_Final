@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+    <body>
+        <h1>SI 364 Final: Spotify Song Recommendation Generator</h1>
+        <a href="{{ url_for('index') }}">Home</a>
+        <a href="{{ url_for('recommendations') }}">Your song recommendations</a>
+        <a href="{{ url_for('login') }}">Log in</a>
+        <a href="{{ url_for('logout') }}">Log out</a>
+        <hr>
+        <br>
+        <br>
+        {% block content %}
+        {% endblock %}
+    </body>
+</html>
+

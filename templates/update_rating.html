@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block content %}
+{% if user.is_authenticated %}
+<h1>Update your rating for {{ song.title }}</h1>
+<form action="{{ url_for('recommendations') }}" method="GET">
+    {{ form.hidden_tag() }}
+    {{ form.rating.label }} {{ form.rating() }}<br>
+    {{ form.songid() }}
+    {{ form.submit() }}<br>
+</form>
+{% else %}
+You need to log in to update your rating!
+{% endif %}
+
+{% endblock %}

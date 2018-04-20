@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>{{song.title}}</h1>
+<h2>By {{artist.name}}</h2>
+<h2>Debuted in {{album.name}}</h2><img height="30px" width="30px" src="{{ album.cover }}"/>
+<h3>You rated it {{song.rating}}/10.</h3>
+{% if user.is_authenticated %}
+<form action="{{ url_for('delete', song_id=song.id) }}" method="POST">
+    {{ form.hidden_tag() }}
+    {{ form.submit() }}<br>
+</form>
+{% endif %}
+{% endblock %}

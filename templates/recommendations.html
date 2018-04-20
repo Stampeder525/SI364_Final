@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block content %}
+{% if user.is_authenticated %}
+<img height="50px" width="50px" src="{{ user.avatar }}" /> <p>{{ user.name }}'s recommendations</p>
+{% endif %}
+
+{% if not songs %}
+You have no recommendations. Search a song on the homepage to get some!
+{% else %}
+<ul>
+{% for song in songs %}
+    <li>
+        <a href="{{url_for('song_details', song_id=song.song.id) }}"><h3>{{ song.song.title }}</h3></a>
+        <h5>by {{ song.artist.name }}</h5>
+        <h6>Debuted in </h6><img height="50px" width="50px" src="{{ song.album.cover }}" /><p>{{ song.album.name }}</p>
+        <h6>Your rating: {{ song.song.rating }}/10</h6>
+        <form action="{{ url_for('update', song_id=song.song.id) }}" method="POST">
+            {{ form.hidden_tag() }}
+            {{ form.submit() }}<br>
+        </form>
+    </li>
+{% endfor %}
+</ul>
+{% endif %}
+{% endblock %}
