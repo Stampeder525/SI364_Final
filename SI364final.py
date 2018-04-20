@@ -23,7 +23,8 @@ class Auth:
     """Google Project Credentials"""
     CLIENT_ID = (clientid)
     CLIENT_SECRET = secret
-    REDIRECT_URI = 'https://si364-final-lorenha.herokuapp.com/callback'
+    REDIRECT_URI = 'http://localhost:5000/callback'
+    #REDIRECT_URI = 'https://si364-final-lorenha.herokuapp.com/callback'
     AUTH_URI = 'https://accounts.google.com/o/oauth2/auth'
     TOKEN_URI = 'https://accounts.google.com/o/oauth2/token'
     USER_INFO = 'https://www.googleapis.com/userinfo/v2/me'
@@ -264,7 +265,7 @@ def recommendations():
 def callback():
     if current_user is not None and current_user.is_authenticated:
         return redirect(url_for('index'))
-    if 'error' in request.args: # Good Q: 'what are request.args here, why do they matter?'
+    if 'error' in request.args:
         if request.args.get('error') == 'access_denied':
             return 'You denied access.'
         return 'Error encountered.'
@@ -304,7 +305,7 @@ def login():
         return redirect(url_for('index'))
     google = get_google_auth()
     auth_url, state = google.authorization_url(
-        Auth.AUTH_URI, access_type='offline')
+        Auth.AUTH_URI, access_type='online')
     session['oauth_state'] = state
     return render_template('login.html', auth_url=auth_url)
 
