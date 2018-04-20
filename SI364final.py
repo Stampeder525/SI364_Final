@@ -12,7 +12,6 @@ from requests.exceptions import HTTPError
 from flask_migrate import Migrate, MigrateCommand
 from flask_script import Manager, Shell
 from flask_wtf import FlaskForm
-from werkzeug import secure_filename
 from client import clientid, secret
 
 
