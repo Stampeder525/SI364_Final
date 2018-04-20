@@ -23,7 +23,7 @@ class Auth:
     """Google Project Credentials"""
     CLIENT_ID = (clientid)
     CLIENT_SECRET = secret
-    REDIRECT_URI = 'http://localhost:5000/callback'
+    REDIRECT_URI = 'https://si364-final-lorenha.herokuapp.com/callback'
     AUTH_URI = 'https://accounts.google.com/o/oauth2/auth'
     TOKEN_URI = 'https://accounts.google.com/o/oauth2/token'
     USER_INFO = 'https://www.googleapis.com/userinfo/v2/me'
