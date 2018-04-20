@@ -4,9 +4,17 @@
 
 #Usage
 
-    Logging in: Upon first opening the app, the user will be prompted to sign in with google. They may do so using a new account or an existing one. They will then be redirected to the home page.
+    Logging in: Upon first opening the app, the user will be prompted to sign in with google. They may do so using a new account or an existing one, but users will require a google account to use the app. They will then be redirected to the home page.
 
-    Finding Recommendations: On the home page, users may 
+    Finding Recommendations: On the home page, users may search for recommendations by entering a song title, artist, genre, and token* (e.g. Bohemian Rhapsody, Queen, Rock) in the search field. To obtain a token, users must click the link above the form that will open a new tab where they may obtain a token. Once the user clicks "Submit", new recommendations will be added to their list.
+
+    Viewing Recommendations: To view recommendations, users may click on the "Your song recommendations" link at the top of the page. Here they will see a full list of all of the songs that have been recommended to them.
+
+    Rating Recommendations: To add or change a rating for one of the songs listed on the recommendations page, simply click the "Update Rating" button next to a song. The user will be redirected to the update rating page, where they may enter a rating between 1 and 10, then click "Update" to submit it. They will then be redirected back to the Recommendations page.
+
+    Viewing a Song: To see a specific song, users may simply click the title of a song on the Recommendations page, and they will be redirected to a new page that shows them various details about the song, as well as allows them to delete it.
+
+    Deleting a Song: To delete a song, simply navigate to a song's page and click the "Delete" button. Users will then be redirected to the Recommendations page.
 
 
 #Modules Required
@@ -58,7 +66,7 @@
 
     **The README.md file should include a 1-paragraph (brief OK) description of what your application does**
 
-    The README.md file should include a detailed explanation of how a user can use the running application (e.g. log in and see what, be able to save what, enter what, search for what... Give us examples of data to enter if its not obviously stated in the app UI!)
+    **The README.md file should include a detailed explanation of how a user can use the running application (e.g. log in and see what, be able to save what, enter what, search for what... Give us examples of data to enter if its not obviously stated in the app UI!)**
 
     **The README.md file should include a list of every module that must be installed with pip if its something you installed that we didnt use in a class session. If there are none, you should note that there are no additional modules to install.**
 
