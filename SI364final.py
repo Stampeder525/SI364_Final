@@ -4,7 +4,7 @@ import requests
 import re
 from flask import Flask, url_for, redirect, render_template, session, request, flash
 from flask_sqlalchemy import SQLAlchemy
-from wtforms import StringField, SubmitField, TextAreaField, IntegerField, FileField, HiddenField
+from wtforms import StringField, SubmitField, TextAreaField, IntegerField, FileField, HiddenField, ValidationError
 from wtforms.validators import Required
 from flask_login import LoginManager, login_required, login_user, logout_user, current_user, UserMixin
 from requests_oauthlib import OAuth2Session
@@ -23,8 +23,8 @@ class Auth:
     """Google Project Credentials"""
     CLIENT_ID = (clientid)
     CLIENT_SECRET = secret
-    #REDIRECT_URI = 'http://localhost:5000/callback'
-    REDIRECT_URI = 'https://si364-final-lorenha.herokuapp.com/callback'
+    REDIRECT_URI = 'http://localhost:5000/callback'
+    #REDIRECT_URI = 'https://si364-final-lorenha.herokuapp.com/callback'
     AUTH_URI = 'https://accounts.google.com/o/oauth2/auth'
     TOKEN_URI = 'https://accounts.google.com/o/oauth2/token'
     USER_INFO = 'https://www.googleapis.com/userinfo/v2/me'
@@ -208,21 +208,24 @@ def index():
         genre = form.genre.data
         genre = genre.lower()
         token = form.token.data
-        #try:
-        songresults = query_spotify(title, artist, genre, token)
-        songs = songresults["tracks"]["items"]
-        for song in songs:
-            title = song["name"]
-            artist = ""
-            for a in song["artists"]:
-                artist = artist + a["name"] +", "
-            artist = artist.strip()[:-1]
-            album = song["album"]["name"]
-            albumcover = song["album"]["images"][1]["url"]
-            s = get_or_create_song(title, artist, album, genre, albumcover)
-        return redirect(url_for('index'))
-        #except KeyError:
-        #    flash("Your API Key has expired, you need a new one.")
+        try:
+            songresults = query_spotify(title, artist, genre, token)
+            songs = songresults["tracks"]["items"]
+            for song in songs:
+                title = song["name"]
+                artist = ""
+                for a in song["artists"]:
+                    artist = artist + a["name"] +", "
+                artist = artist.strip()[:-1]
+                album = song["album"]["name"]
+                albumcover = song["album"]["images"][1]["url"]
+                s = get_or_create_song(title, artist, album, genre, albumcover)
+            return redirect(url_for('index'))
+        except KeyError:
+            flash("Your API Key has expired, you need a new one.")
+    errors = [v for v in form.errors.values()]
+    if len(errors) > 0:
+        flash("ERRORS IN FORM SUBMISSION - " + str(errors))
     return render_template('index.html', form=form, user=current_user)
 
 @app.route('/song/<song_id>', methods=["GET", "POST"]) # Render the title, author, album, and possible other details of a specific song.
@@ -305,7 +308,7 @@ def login():
         return redirect(url_for('index'))
     google = get_google_auth()
     auth_url, state = google.authorization_url(
-        Auth.AUTH_URI, access_type='online')
+        Auth.AUTH_URI, access_type='offline')
     session['oauth_state'] = state
     return render_template('login.html', auth_url=auth_url)
 
@@ -321,6 +324,9 @@ def update(song_id):
     form = UpdateRatingForm(songid=song_id)
     form.songid.data = song_id
     song = db.session.query(Song).filter_by(id=song_id).first()
+    errors = [v for v in form.errors.values()]
+    if len(errors) > 0:
+        flash("ERRORS IN FORM SUBMISSION - " + str(errors))
     return render_template('update_rating.html', song=song, form=form, user=current_user)
 
 @app.route('/delete/<song_id>', methods=["GET", "POST"])
